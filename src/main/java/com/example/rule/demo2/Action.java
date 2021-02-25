@@ -13,4 +13,7 @@ public interface Action
      * @return
      */
     void execute();
+
+    void build(String identityId, String activityId, String ruleType, String ruleId, int userLevel);
+
 }

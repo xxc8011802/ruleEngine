@@ -7,15 +7,15 @@ import com.example.rule.demo2.entity.Reward;
 
 public abstract class BaseAction implements Action
 {
-    private String identityId;
+    protected String identityId;
 
-    private String activityId;
+    protected String activityId;
 
-    private String ruleType;
+    protected String ruleType;
 
-    private String ruleId;
+    protected String ruleId;
 
-    private int userLevel;
+    protected int userLevel;
 
     public BaseAction(String identityId, String activityId, String ruleType, String ruleId, int userLevel)
     {
@@ -24,6 +24,10 @@ public abstract class BaseAction implements Action
         this.ruleType = ruleType;
         this.ruleId = ruleId;
         this.userLevel = userLevel;
+    }
+
+    public BaseAction(){
+
     }
 
     /**
@@ -41,4 +45,24 @@ public abstract class BaseAction implements Action
         System.out.println("基类操作,话单记录");
     }
 
+    public void build(String identityId, String activityId, String ruleType, String ruleId, int userLevel){
+        this.identityId=identityId;
+        this.activityId=activityId;
+        this.ruleType=ruleType;
+        this.ruleId=ruleId;
+        this.userLevel=userLevel;
+    }
+
+    @Override
+    public String toString()
+    {
+        final StringBuffer sb = new StringBuffer("BaseAction{");
+        sb.append("identityId='").append(identityId).append('\'');
+        sb.append(", activityId='").append(activityId).append('\'');
+        sb.append(", ruleType='").append(ruleType).append('\'');
+        sb.append(", ruleId='").append(ruleId).append('\'');
+        sb.append(", userLevel=").append(userLevel);
+        sb.append('}');
+        return sb.toString();
+    }
 }

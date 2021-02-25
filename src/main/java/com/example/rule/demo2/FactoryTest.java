@@ -9,14 +9,15 @@ public class FactoryTest
     {
         ActionFactory actionFactory = new ActionFactory();
 
-        Action signAction = actionFactory.getAction("SIGNIN","1", "1", "LOTTORY", "1",1);
+        Action signAction = actionFactory.getAction("SIGNIN");
+        signAction.build("1", "1", "LOTTORY", "1",1);
         if(signAction.condition()){
             signAction.execute();
         }
-
-       /* Action attendAction = actionFactory.getAction("ATTEND","1", "1", "VIRTUAL", "1",1);
+        Action attendAction = actionFactory.getAction("ATTEND");
+        attendAction.build("1", "1", "VIRTUAL", "1",1);
         if(attendAction.condition()){
             attendAction.execute();
-        }*/
+        }
     }
 }
