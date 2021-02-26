@@ -4,8 +4,14 @@ import com.example.rule.demo2.Action;
 import com.example.rule.demo2.Rule;
 import com.example.rule.demo2.RuleFactory;
 import com.example.rule.demo2.entity.Reward;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class BaseAction implements Action
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+/*@Component*/
+public abstract class BaseAction implements Action,Serializable,Cloneable
 {
     protected String identityId;
 
@@ -16,6 +22,12 @@ public abstract class BaseAction implements Action
     protected String ruleId;
 
     protected int userLevel;
+
+    @Autowired
+    RuleFactory ruleFactory;
+
+
+    public static final Map<String ,Class<?>> map = new HashMap<>();
 
     public BaseAction(String identityId, String activityId, String ruleType, String ruleId, int userLevel)
     {
@@ -37,13 +49,16 @@ public abstract class BaseAction implements Action
     @Override
     public void execute()
     {
-        System.out.println("获取奖励详情");
-        RuleFactory ruleFactory = new RuleFactory();
-        Rule rule = ruleFactory.getRule(ruleType,ruleId);
+        //System.out.println("获取奖励详情");
+        //RuleFactory ruleFactory = new RuleFactory();
+        Rule rule = ruleFactory.getRule(ruleType);
+        rule.build(identityId, activityId,ruleId);
         Reward reward = rule.getReward();
         rule.giveReward(reward);
-        System.out.println("基类操作,话单记录");
+        //System.out.println("基类操作,话单记录");
     }
+
+
 
     public void build(String identityId, String activityId, String ruleType, String ruleId, int userLevel){
         this.identityId=identityId;
@@ -64,5 +79,9 @@ public abstract class BaseAction implements Action
         sb.append(", userLevel=").append(userLevel);
         sb.append('}');
         return sb.toString();
+    }
+
+    public BaseAction clone() throws CloneNotSupportedException {
+        return (BaseAction) super.clone();
     }
 }

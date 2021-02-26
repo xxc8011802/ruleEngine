@@ -1,7 +1,8 @@
 package com.example.rule.demo2.impl.action;
 
-import java.util.Date;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AttendAction extends BaseAction
 {
 
@@ -17,14 +18,14 @@ public class AttendAction extends BaseAction
     @Override
     public boolean condition()
     {
-        System.out.println("报名条件判断");
+        //System.out.println("报名条件判断");
         return true;
     }
 
     @Override
     public void execute()
     {
-        System.out.println("报名操作下发奖励");
+        //System.out.println("报名操作下发奖励");
         super.execute();
     }
 
@@ -45,5 +46,9 @@ public class AttendAction extends BaseAction
         sb.append(", userLevel=").append(userLevel);
         sb.append('}');
         return sb.toString();
+    }
+
+    public AttendAction clone() throws CloneNotSupportedException {
+        return (AttendAction) super.clone();
     }
 }

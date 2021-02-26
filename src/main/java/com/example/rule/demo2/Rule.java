@@ -7,4 +7,6 @@ public interface Rule
     Reward getReward();
 
     boolean giveReward(Reward reward);
+
+    void build(String identityId, String activityId,String ruleId);
 }

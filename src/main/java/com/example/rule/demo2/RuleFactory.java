@@ -1,19 +1,45 @@
 package com.example.rule.demo2;
 
+import com.example.rule.demo2.impl.action.AttendAction;
+import com.example.rule.demo2.impl.action.SignInAction;
 import com.example.rule.demo2.impl.rule.LottoryRule;
 import com.example.rule.demo2.impl.rule.VirtualScoreRule;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-public class RuleFactory
+import java.util.HashMap;
+import java.util.Map;
+
+@Component
+public class RuleFactory implements ApplicationContextAware
 {
-    public Rule getRule(String rule,String ruleId){
-        if(rule == null){
-            return null;
+
+    public static final Map<String ,Class<?>> map = new HashMap<>();
+
+    public Rule getRule(String ruleType){
+        try
+        {
+            Rule rule = (Rule)map.get(ruleType).newInstance();
+            return rule;
         }
-        if(rule.equalsIgnoreCase("LOTTORY")){
-            return new LottoryRule("抽奖", "LOTTORY", ruleId);
-        } else if(rule.equalsIgnoreCase("VIRTUAL")){
-            return new VirtualScoreRule("虚拟点", "VIRTUAL", ruleId);
+        catch (InstantiationException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext)
+        throws BeansException
+    {
+        map.put("LOTTORY",LottoryRule.class);
+        map.put("VIRTUAL",VirtualScoreRule.class);
     }
 }
